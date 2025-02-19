@@ -18,7 +18,7 @@
 ### Document
 1. Обновление PUT 127.0.0.1:8081/api/document
 
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid",
@@ -28,7 +28,7 @@
 ```
 2. Удаление DELETE 127.0.0.1:8081/api/document
 ---
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid"
@@ -37,7 +37,7 @@
 ---
 3. Получение по uuid пассажира POST 127.0.0.1:8081/api/document/get-by-passenger
 ---
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid"
@@ -48,7 +48,7 @@
 ### Passenger
 1. Обновление PUT 127.0.0.1:8081/api/passenger
 
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid",
@@ -59,7 +59,7 @@
 ```
 2. Удаление DELETE 127.0.0.1:8081/api/passenger
 ---
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid"
@@ -68,7 +68,7 @@
 ---
 3. Получение отчета POST 127.0.0.1:8081/api/document/report
 ---
-***body с тестовыми данными:***
+body с тестовыми данными:
 ```json
     {
       "passenger_uuid" : "d3febc99-9c0b-4ef8-bb6d-6bb9bd380a15",
@@ -81,7 +81,7 @@
 ### Ticket
 1. Обновление PUT 127.0.0.1:8081/api/ticket
 
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid",
@@ -97,7 +97,7 @@
 ```
 2. Удаление DELETE 127.0.0.1:8081/api/ticket
 ---
-***body:***
+body:
 ```json
     {
         "uuid" : "uuid"
@@ -106,7 +106,7 @@
 ---
 3. Получение всех билетов Post 127.0.0.1:8081/api/document/all
 ---
-***body с тестовыми данными:***
+body:
 ```json
     {
       "size" : 10,
@@ -115,7 +115,7 @@
 ```
 4. Получение полной информации по билету Post 127.0.0.1:8081/api/document/full-info
 ---
-***body с тестовыми данными:***
+body:
 ```json
     {
       "uuid" : "uuid"
@@ -123,7 +123,7 @@
 ```
 5. Получение пассажиров Post 127.0.0.1:8081/api/document/passengers
 ---
-***body с тестовыми данными:***
+body:
 ```json
     {
       "uuid" : "uuid"
