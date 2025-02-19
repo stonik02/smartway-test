@@ -13,6 +13,14 @@
 
 **В директории migrates лежат скрипты для создания таблиц, а так же для заполнения тестовыми данными**
 
+## Config
+Конфиг парсится из энвов
+- PG_HOST
+- PG_PORT
+- PG_USER
+- PG_PASSWORD
+- PG_DB_NAME
+- APP_PORT
 
 ## Handlers
 ### Document
