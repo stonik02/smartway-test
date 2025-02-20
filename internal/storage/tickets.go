@@ -12,6 +12,7 @@ import (
 )
 
 type Ticket interface {
+	Create(ctx context.Context, args *models.Ticket) error
 	Get(ctx context.Context, query *query.Limit) ([]*models.Ticket, error)
 	Update(ctx context.Context, ticket *models.Ticket) error
 	Delete(ctx context.Context, uid uuid.UUID) error
@@ -28,6 +29,24 @@ func NewTicket(client *pgxpool.Pool) Ticket {
 	return &ticket{
 		client: client,
 	}
+}
+
+var createTicket = `
+INSERT INTO tickets (uuid, passenger_uuid, departure,
+                     destination, departure_date, arrival_date,
+                     order_number, provider, booking_date,
+                     flight_number)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+`
+
+func (r ticket) Create(ctx context.Context, args *models.Ticket) error {
+	_, err := r.client.Exec(ctx, createTicket,
+		args.UUID, args.PassengerUUID, args.Departure,
+		args.Destination, args.DepartureDate, args.ArrivalDate,
+		args.OrderNumber, args.Provider, args.BookingDate,
+		args.FlightNumber,
+	)
+	return err
 }
 
 var getTickets = `SELECT * FROM tickets LIMIT $1 OFFSET $2;`

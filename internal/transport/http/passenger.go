@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/log"
+	"github.com/google/uuid"
 	"test-task/internal/models"
 	"test-task/internal/storage"
 	"test-task/internal/storage/query"
@@ -24,9 +25,35 @@ func NewPassengerHandler(storage storage.Passenger, router fiber.Router) transpo
 }
 
 func (h passengerHandler) Register() {
+	h.router.Post("/create", h.Create)
 	h.router.Put("/", h.Update)
 	h.router.Delete("/", h.Delete)
 	h.router.Post("/report", h.GetReport)
+}
+
+func (h passengerHandler) Create(ctx fiber.Ctx) error {
+	var body *dto.CreatePassengerRequest
+	err := json.Unmarshal(ctx.Body(), &body)
+	if err != nil {
+		log.Errorf("Failed to unmarshal CreatePassenger: %v", err)
+		return fiber.ErrBadRequest
+	}
+
+	pass := &models.Passenger{
+		UUID:       uuid.New(),
+		LastName:   body.LastName,
+		FirstName:  body.FirstName,
+		MiddleName: body.MiddleName,
+	}
+
+	err = h.storage.Create(ctx.Context(), pass)
+	if err != nil {
+		log.Errorf("Failed to create Passenger: %v", err)
+		return err
+	}
+
+	ctx.Status(fiber.StatusOK)
+	return ctx.JSON(pass)
 }
 
 func (h passengerHandler) Update(ctx fiber.Ctx) error {

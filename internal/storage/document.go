@@ -11,6 +11,7 @@ import (
 )
 
 type Document interface {
+	Create(ctx context.Context, doc *models.Document) error
 	GetByPassenger(ctx context.Context, passenger uuid.UUID) ([]*models.Document, error)
 	Update(ctx context.Context, document *models.Document) error
 	Delete(ctx context.Context, uid uuid.UUID) error
@@ -24,6 +25,19 @@ func NewDocument(client *pgxpool.Pool) Document {
 	return &document{
 		client: client,
 	}
+}
+
+var createDocument = `
+INSERT INTO documents (uuid, passenger_uuid, type, number)
+VALUES ($1, $2, $3, $4);
+`
+
+func (r document) Create(ctx context.Context, doc *models.Document) error {
+	if doc.UUID == uuid.Nil {
+		doc.UUID = uuid.New()
+	}
+	_, err := r.client.Exec(ctx, createDocument, doc.UUID, doc.PassengerUUID, doc.Type, doc.Number)
+	return err
 }
 
 var getByPassenger = `

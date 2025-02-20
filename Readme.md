@@ -34,8 +34,9 @@ body:
         "value" : "value"
     }
 ```
-2. Удаление DELETE 127.0.0.1:8081/api/document
 ---
+2. Удаление DELETE 127.0.0.1:8081/api/document
+
 body:
 ```json
     {
@@ -44,11 +45,22 @@ body:
 ```
 ---
 3. Получение по uuid пассажира POST 127.0.0.1:8081/api/document/get-by-passenger
----
+
 body:
 ```json
     {
         "uuid" : "uuid"
+    }
+```
+---
+4. Добавление документа POST 127.0.0.1:8081/api/document/create
+
+body:
+```json
+    {
+        "passenger_uuid" : "passenger_uuid",
+        "type" : "type",
+        "number" : "number"
     }
 ```
 ---
@@ -66,7 +78,7 @@ body:
     }
 ```
 2. Удаление DELETE 127.0.0.1:8081/api/passenger
----
+
 body:
 ```json
     {
@@ -74,14 +86,25 @@ body:
     }
 ```
 ---
-3. Получение отчета POST 127.0.0.1:8081/api/document/report
----
+3. Получение отчета POST 127.0.0.1:8081/api/passenger/report
+
 body с тестовыми данными:
 ```json
     {
       "passenger_uuid" : "d3febc99-9c0b-4ef8-bb6d-6bb9bd380a15",
       "start_date" : "2020-01-01",
       "end_date" : "2024-12-31"
+    }
+```
+---
+4. Добавление пассажира POST 127.0.0.1:8081/api/passenger/create
+
+body:
+```json
+    {
+        "last_name" : "last_name",
+        "first_name" : "first_name",
+        "middle_name" : "middle_name"
     }
 ```
 ---
@@ -104,7 +127,7 @@ body:
     }
 ```
 2. Удаление DELETE 127.0.0.1:8081/api/ticket
----
+
 body:
 ```json
     {
@@ -112,8 +135,8 @@ body:
     }
 ```
 ---
-3. Получение всех билетов Post 127.0.0.1:8081/api/document/all
----
+3. Получение всех билетов Post 127.0.0.1:8081/api/ticket/all
+
 body:
 ```json
     {
@@ -121,20 +144,37 @@ body:
       "page" : 0
     }
 ```
-4. Получение полной информации по билету Post 127.0.0.1:8081/api/document/full-info
----
+4. Получение полной информации по билету Post 127.0.0.1:8081/api/ticket/full-info
+
 body:
 ```json
     {
       "uuid" : "uuid"
     }
 ```
-5. Получение пассажиров Post 127.0.0.1:8081/api/document/passengers
----
+5. Получение пассажиров Post 127.0.0.1:8081/api/ticket/passengers
+
 body:
 ```json
     {
       "uuid" : "uuid"
+    }
+```
+---
+6. Создание билета Post 127.0.0.1:8081/api/ticket/create
+
+body:
+```json
+    {
+      "passenger_uuid" : "passenger_uuid",
+      "departure" : "departure",
+      "departure_date" : "time.Time",
+      "destination" : "destination",
+      "arrival_date" : "time.Time",
+      "order_number" : "order_number",
+      "provider" : "provider",
+      "booking_date" : "2020-10-10",
+      "flight_number" : "flight_number"
     }
 ```
 ---
@@ -142,18 +182,21 @@ body:
 ## Репозитории
 
 ### Document
-1. Получение документов по uuid пассажира
-2. Обновление документа
-3. Удаление документа
+1. Добавление документа
+2. Получение документов по uuid пассажира
+3. Обновление документа
+4. Удаление документа
 
 ### Passenger
-1. Обновление пассажира
-2. Удаление пассажира
-3. Получение отчета
+1. Добавление пассажира
+2. Обновление пассажира
+3. Удаление пассажира
+4. Получение отчета
 
 ### Tickets
-1. Получение всех билетов
-2. Обновление билета
-3. Удаление билета
-4. Получение полной информации по билету (вывод всех пассажиров + документы)
-5. Получение всех пассажиров на рейс по uuid билета
+1. Добавление билета
+2. Получение всех билетов
+3. Обновление билета
+4. Удаление билета
+5. Получение полной информации по билету (вывод всех пассажиров + документы)
+6. Получение всех пассажиров на рейс по uuid билета

@@ -12,6 +12,7 @@ import (
 )
 
 type Passenger interface {
+	Create(ctx context.Context, passenger *models.Passenger) error
 	Update(ctx context.Context, passenger *models.Passenger) error
 	Delete(ctx context.Context, uid uuid.UUID) error
 	GetReport(ctx context.Context, report *query.GetReport) ([]*models.PassengerReport, error)
@@ -25,6 +26,19 @@ func NewPassenger(client *pgxpool.Pool) Passenger {
 	return &passenger{
 		client: client,
 	}
+}
+
+var createPassenger = `
+INSERT INTO passengers (uuid, last_name, first_name, middle_name) 
+VALUES ($1, $2, $3, $4)
+`
+
+func (p passenger) Create(ctx context.Context, passenger *models.Passenger) error {
+	if passenger.UUID == uuid.Nil {
+		passenger.UUID = uuid.New()
+	}
+	_, err := p.client.Exec(ctx, createPassenger, passenger.UUID, passenger.LastName, passenger.FirstName, passenger.MiddleName)
+	return err
 }
 
 var updatePassenger = `
